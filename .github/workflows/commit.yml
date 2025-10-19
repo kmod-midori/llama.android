@@ -29,6 +29,10 @@ jobs:
 
       - name: Publish library
         run: ./gradlew :llama:publishReleasePublicationToGitHubPackagesRepository
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Upload sample app
         uses: actions/upload-artifact@v4
