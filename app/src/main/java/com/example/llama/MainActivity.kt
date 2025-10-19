@@ -72,25 +72,30 @@ class MainActivity(
         val extFilesDir = getExternalFilesDir(null)
 
         val models = listOf(
-            Downloadable(
-                "Phi-2 7B (Q4_0, 1.6 GiB)",
-                "https://huggingface.co/ggml-org/models/resolve/main/phi-2/ggml-model-q4_0.gguf?download=true".toUri(),
-                File(extFilesDir, "phi-2-q4_0.gguf"),
-            ),
-            Downloadable(
-                "TinyLlama 1.1B (f16, 2.2 GiB)",
-                "https://huggingface.co/ggml-org/models/resolve/main/tinyllama-1.1b/ggml-model-f16.gguf?download=true".toUri(),
-                File(extFilesDir, "tinyllama-1.1-f16.gguf"),
-            ),
-            Downloadable(
-                "Phi 2 DPO (Q3_K_M, 1.48 GiB)",
-                "https://huggingface.co/TheBloke/phi-2-dpo-GGUF/resolve/main/phi-2-dpo.Q3_K_M.gguf?download=true".toUri(),
-                File(extFilesDir, "phi-2-dpo.Q3_K_M.gguf")
-            ),
+//            Downloadable(
+//                "Phi-2 7B (Q4_0, 1.6 GiB)",
+//                "https://huggingface.co/ggml-org/models/resolve/main/phi-2/ggml-model-q4_0.gguf?download=true".toUri(),
+//                File(extFilesDir, "phi-2-q4_0.gguf"),
+//            ),
+//            Downloadable(
+//                "TinyLlama 1.1B (f16, 2.2 GiB)",
+//                "https://huggingface.co/ggml-org/models/resolve/main/tinyllama-1.1b/ggml-model-f16.gguf?download=true".toUri(),
+//                File(extFilesDir, "tinyllama-1.1-f16.gguf"),
+//            ),
+//            Downloadable(
+//                "Phi 2 DPO (Q3_K_M, 1.48 GiB)",
+//                "https://huggingface.co/TheBloke/phi-2-dpo-GGUF/resolve/main/phi-2-dpo.Q3_K_M.gguf?download=true".toUri(),
+//                File(extFilesDir, "phi-2-dpo.Q3_K_M.gguf")
+//            ),
             Downloadable(
                 "Qwen 3 0.6B (Q4_0, 429 MiB)",
                 "https://huggingface.co/ggml-org/Qwen3-0.6B-GGUF/resolve/main/Qwen3-0.6B-Q4_0.gguf?download=true".toUri(),
                 File(extFilesDir, "Qwen3-0.6B-Q4_0.gguf")
+            ),
+            Downloadable(
+                "Qwen 2.5 0.5B (Q4_K_M, 491 MiB)",
+                "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/qwen2.5-0.5b-instruct-q4_k_m.gguf?download=true".toUri(),
+                File(extFilesDir, "qwen2.5-0.5b-instruct-q4_k_m.gguf")
             ),
         )
 

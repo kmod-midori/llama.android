@@ -1,5 +1,6 @@
 #include <jni.h>
 #include "llama.h"
+#include <android/log.h>
 
 extern "C"
 JNIEXPORT jlong JNICALL
@@ -49,6 +50,12 @@ Java_moe_reimu_llama_cpp_android_Sampler_samplerFree(JNIEnv *env, jobject thiz, 
     GGML_UNUSED(thiz);
 
     auto *smpl = reinterpret_cast<llama_sampler *>(pointer);
+    __android_log_print(
+            ANDROID_LOG_INFO,
+            "Llama-Backend-Cpp",
+            "Freeing sampler at %p",
+            smpl
+    );
     llama_sampler_free(smpl);
 }
 

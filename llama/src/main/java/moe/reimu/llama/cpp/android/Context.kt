@@ -5,12 +5,11 @@ import kotlinx.coroutines.withContext
 import java.io.Closeable
 
 class Context private constructor(model: Model, ctxSize: Int, batchSize: Int) : Closeable {
-    private var pointer: Long
+    private var pointer: Long = 0
 
-    private external fun initFromModel(modelPointer: Long, ctxSize: Int, batchSize: Int): Long
-    private external fun free(pointer: Long)
-    private external fun generate(
-        ctxPointer: Long,
+    private external fun initFromModel(modelPointer: Long, ctxSize: Int, batchSize: Int)
+    private external fun free()
+    private external fun generateNative(
         samplerPointer: Long,
         messages: Array<Message>,
         maxTokens: Int,
@@ -18,12 +17,7 @@ class Context private constructor(model: Model, ctxSize: Int, batchSize: Int) : 
 
     override fun close() {
         runBlocking(Backend.dispatcher) {
-            if (pointer == 0L) {
-                return@runBlocking
-            }
-
-            free(pointer)
-            pointer = 0L
+            free()
         }
     }
 
@@ -35,10 +29,7 @@ class Context private constructor(model: Model, ctxSize: Int, batchSize: Int) : 
             throw IllegalArgumentException("batchSize must be positive")
         }
 
-        pointer = initFromModel(model.getPointer(), ctxSize, batchSize)
-        if (pointer == 0L) {
-            throw IllegalStateException("initFromModel() failed")
-        }
+        initFromModel(model.getPointer(), ctxSize, batchSize)
     }
 
     fun getPointer(): Long {
@@ -47,8 +38,7 @@ class Context private constructor(model: Model, ctxSize: Int, batchSize: Int) : 
 
     suspend fun generate(sampler: Sampler, messages: Iterable<Message>, maxTokens: Int): String =
         withContext(Backend.dispatcher) {
-            generate(
-                pointer,
+            generateNative(
                 sampler.getPointer(),
                 messages.toList().toTypedArray(),
                 maxTokens,
