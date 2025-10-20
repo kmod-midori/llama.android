@@ -3,7 +3,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("maven-publish")
+    id("com.vanniktech.maven.publish")
 }
 
 android {
@@ -54,36 +54,37 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    publishing {
-        singleVariant("release") {}
-    }
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("release") {
-            afterEvaluate {
-                from(components["release"])
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
+
+    coordinates("moe.reimu", "llama-cpp-android", "1.0.0-SNAPSHOT")
+
+    pom {
+        name.set("llama-cpp-android")
+        description.set("Android bindings for llama.cpp")
+        inceptionYear.set("2025")
+        url.set("https://github.com/kmod-midori/llama.android")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/licenses/MIT")
+                distribution.set("https://opensource.org/licenses/MIT")
             }
-            groupId = "moe.reimu"
-            artifactId = "llama-cpp-android"
-            version = "1.0.0-SNAPSHOT"
         }
-    }
-    repositories {
-        maven {
-            name = "build"
-            url = uri(layout.buildDirectory.dir("repo"))
-        }
-        maven {
-            name = "GitHubPackages"
-            val repo = System.getenv("GITHUB_REPOSITORY")
-            url = uri("https://maven.pkg.github.com/$repo")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+        developers {
+            developer {
+                id = "kmod-midori"
+                name = "Midori Kochiya"
+                url = "https://github.com/kmod-midori/"
             }
+        }
+        scm {
+            url.set("https://github.com/kmod-midori/llama.android")
+            connection.set("scm:git:git://github.com/kmod-midori/llama.android.git")
+            developerConnection.set("scm:git:ssh://git@github.com/kmod-midori/llama.android.git")
         }
     }
 }

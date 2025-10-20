@@ -27,12 +27,12 @@ jobs:
       - name: Build sample app
         run: ./gradlew :app:assembleDebug
 
-      - name: Publish library
-        run: ./gradlew :llama:publishReleasePublicationToGitHubPackagesRepository
+      - name: Publish snapshot
+        run: ./gradlew :llama:publishToMavenCentral
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
 
       - name: Upload sample app
         uses: actions/upload-artifact@v4
